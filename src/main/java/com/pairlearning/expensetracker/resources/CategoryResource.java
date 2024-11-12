@@ -22,7 +22,7 @@ public class CategoryResource {
     @GetMapping("")
     public ResponseEntity<List<Category>> getAllCategories(HttpServletRequest request) {
         int userId = (Integer) request.getAttribute("userId");
-        List<Category> categories = categoryService.fetchAllCategories(userId);
+        List<Category> categories = categoryService.fetchAllCategories(Integer.valueOf(userId));
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 

@@ -76,11 +76,11 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     private RowMapper<Transaction> transactionRowMapper = ((rs, rowNum) -> {
-        return new Transaction(rs.getInt("TRANSACTION_ID"),
-                rs.getInt("CATEGORY_ID"),
-                rs.getInt("USER_ID"),
-                rs.getDouble("AMOUNT"),
+        return new Transaction(Integer.valueOf(rs.getInt("TRANSACTION_ID")),
+                Integer.valueOf(rs.getInt("CATEGORY_ID")),
+                Integer.valueOf(rs.getInt("USER_ID")),
+                Double.valueOf(rs.getDouble("AMOUNT")),
                 rs.getString("NOTE"),
-                rs.getLong("TRANSACTION_DATE"));
+                Long.valueOf(rs.getLong("TRANSACTION_DATE")));
     });
 }
