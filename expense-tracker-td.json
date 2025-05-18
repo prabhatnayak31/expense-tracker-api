@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:136844417581:task-definition/expense-tracker-td:1",
+    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:136844417581:task-definition/expense-tracker-td:6",
     "containerDefinitions": [
         {
             "name": "expense-tracker",
-            "image": "expense-tracker/expense-tracker-api:latest",
+            "image": "136844417581.dkr.ecr.ap-south-1.amazonaws.com/expense-tracker:d73ec65a8ac3ebe887ab7e73899e72e9079cb459",
             "cpu": 0,
             "memory": 1024,
             "portMappings": [
@@ -16,11 +16,24 @@
                 }
             ],
             "essential": true,
-            "environment": [],
-            "environmentFiles": [],
+            "environment": [
+                {
+                    "name": "SPRING_DATASOURCE_USERNAME",
+                    "value": "root"
+                },
+                {
+                    "name": "SPRING_DATASOURCE_URL",
+                    "value": "jdbc:postgresql://expense-tracker.c5mqeeoaaond.ap-south-1.rds.amazonaws.com:5432/expensetrackerdb"
+                }
+            ],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
+            "secrets": [
+                {
+                    "name": "SPRING_DATASOURCE_PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:ap-south-1:136844417581:secret:postgres_user_details-dj8Va6"
+                }
+            ],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -40,7 +53,7 @@
     "taskRoleArn": "arn:aws:iam::136844417581:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::136844417581:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 6,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -51,13 +64,22 @@
             "name": "ecs.capability.execution-role-awslogs"
         },
         {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.secrets.asm.environment-variables"
         },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
         },
         {
             "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
         },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
@@ -83,7 +105,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2025-05-18T09:53:50.913Z",
+    "registeredAt": "2025-05-18T13:48:10.356Z",
     "registeredBy": "arn:aws:iam::136844417581:root",
     "enableFaultInjection": false,
     "tags": []
