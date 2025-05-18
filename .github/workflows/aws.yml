@@ -43,6 +43,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '22'
+
+    - name: build
+      run: mvn clean install -DskipTests
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
